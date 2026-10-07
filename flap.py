@@ -18,8 +18,8 @@ class Pipe():
          
 
     def draw(self):
-        raylib.draw_rectangle_rec(self.topRect,(0,230,0,255))
-        raylib.draw_rectangle_rec(self.bottomRect,(0,230,0,255))
+        raylib.draw_rectangle_rec(self.topRect,(1, 121, 110,255))
+        raylib.draw_rectangle_rec(self.bottomRect,(1, 121, 110,255))
 
 
 class Bird():
@@ -30,6 +30,7 @@ class Bird():
         self.size = 40
         self.brain = neuralNetworks.nNetwork((5,9,4,1))
         self.score = 0
+        self.colour = [random.randint(0,255) for _ in range(3)] + [150]
 
 
     def jump(self):
@@ -55,7 +56,7 @@ class Bird():
         self.score += 1#/(((pipes[0].height-self.y)**2)+0.00001)
         
     def draw(self):
-        raylib.draw_circle(self.x,self.y,self.size//2,(230,0,0,150))
+        raylib.draw_circle(self.x,self.y,self.size//2,self.colour)
 
 
 def render():
@@ -68,10 +69,11 @@ def render():
     for pipe in pipes:
         pipe.draw()
 
-    raylib.draw_text(str(len(birds)),10,10,18,(255,255,255,255))
-    raylib.draw_text(str(topTopScore),10,30,18,(255,255,255,255))
-    raylib.draw_text(str(topScore),10,50,18,(255,255,255,255))
-    raylib.draw_text(str(frameCount),10,70,18,(255,255,255,255))
+    raylib.draw_text("bird population: " + str(len(birds)),10,10,18,(255,255,255,255))
+    raylib.draw_text("top score: " +str(topTopScore),10,30,18,(255,255,255,255))
+    raylib.draw_text("current score: "+str(topScore),10,50,18,(255,255,255,255))
+    raylib.draw_text("frame count: "+str(frameCount),10,70,18,(255,255,255,255))
+    raylib.draw_text("generation: "+str(generation),10,90,18,(255,255,255,255))
     raylib.end_drawing()
 
 def updateChunk(chunk):
@@ -104,7 +106,7 @@ maxSpeed = 8
 jumpPower = -10
 random.seed(1000)
 
-
+generation = 0
 topScore = 0
 topTopScore = 0
 lastScore = 0
@@ -151,6 +153,7 @@ while not raylib.window_should_close():
     frameCount += 1
 
     if len(birds) == 0:
+        generation += 1
         print(topScore)
         pipes.clear()
         frameCount = 0
