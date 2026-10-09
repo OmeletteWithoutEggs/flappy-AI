@@ -159,7 +159,7 @@ while not raylib.window_should_close():
         frameCount = 0
         #pipes.append(Pipe(random.randint(200,800),random.randint(200,300)))
         birds.clear()
-        brains = lastBird.brain.evolve(numBirds,6000/max(lastScore**1.43,0.001))
+        brains = lastBird.brain.evolve(numBirds,6500/max(lastScore**1.43,0.001))
         topScore = 0
         for i in range(numBirds):
 

@@ -1,5 +1,8 @@
 import numpy as np
 
+
+np.random.seed(1000)
+
 class nNetwork():
     def __init__(self, shape, weights = None, biases = None):
         
